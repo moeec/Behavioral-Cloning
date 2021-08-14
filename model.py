@@ -6,15 +6,22 @@ import tensorflow as tf
 from keras.layers import Flatten, Dense
 from keras.layers.convolutional import Convolution2D
 from keras.models import Sequential
+from PIL import Image
+from scipy import ndimage
+import matplotlib.pyplot as plt
 
 
 lines = []
 images = []
 measurements = []  
 
+print(test_image_np.shape)
 
 with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
+    
+    next(reader)   ## skip csv header
+    
     for line in reader:
         lines.append(line)
         
@@ -22,7 +29,8 @@ for line in lines:
     source_path = line[0]
     filename = source_path.split('/')[-1]
     current_path = '../data/IMG/' + filename
-    image = cv2.imread(current_path)
+    image = ndimage.imread(current_path)
+    #image = cv2.imread(current_path)
     images.append(image)
     measurement = float(line[3])
     measurements.append(measurement)
@@ -30,7 +38,6 @@ for line in lines:
 X_train = np.array(images)
 y_train = np.array(measurements)
 
-print(X_train.shape)
 
 # Neural Network Starts here
 model = Sequential()
