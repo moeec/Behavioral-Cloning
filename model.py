@@ -27,8 +27,6 @@ for line in lines:
     measurement = float(line[3])
     measurements.append(measurement)
     
-
-    
 X_train = np.array(images)
 y_train = np.array(measurements)
 
