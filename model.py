@@ -3,11 +3,13 @@ import os
 import cv2
 import numpy as np
 import tensorflow as tf
-from keras.layers import Flatten, Dense, Lambda
+from keras.layers import Flatten, Dense, Lambda, Activation, MaxPooling2D
 from keras.layers.convolutional import Convolution2D
 from keras.models import Sequential
 from PIL import Image
 from scipy import ndimage
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 
 
@@ -41,9 +43,16 @@ y_train = np.array(measurements)
 # Neural Network Starts here
 model = Sequential()
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+
+model.add(Convolution2D(6,5,5,activation='relu'))
+model.add(MaxPooling2D())
+model.add(Convolution2D(6,5,5,activation='relu'))
+model.add(MaxPooling2D())
 model.add(Flatten())
+model.add(Dense(120))
+model.add(Dense(84))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=3)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=5)
 model.save('model.h5')
