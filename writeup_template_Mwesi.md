@@ -1,8 +1,10 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
+Introduction:
 
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
+In this project, I will use what I've learned about deep neural networks and convolutional neural networks to clone driving behavior. I will train, validate and test a model using Keras. The model will output a steering angle to an autonomous vehicle.
+
+I used a simulator where you can steer a car around a track for data collection. I will collect both image data and steering angles to train a neural network and then use this model to drive the car autonomously around the track.
 
 ---
 
@@ -16,6 +18,20 @@ The goals / steps of this project are the following:
 * Summarize the results with a written report
 
 
+**Use the simulator to collect data of good driving behavior**
+
+I run the Udacity simluator to record good driving data used to train the model. 
+When driving I first went around the track 5 times in one recording then 4 times. Out of these 9 times I made sure I was staying within the road and in some instances I moved to the left and right side of the road then recentered to the center to demonstrate recovery to the neural network.
+This process was then repeated for the left camera then the right camera teaching the neural network different viewpoints.
+
+
+
+The dataset consists of 22134 images:
+- 7377 Center Camera Image, 
+- 7370 left Camera Image 
+- 7387 Right Camera Image angle
+
+The training track contains a lot of shallow turns and straight road segments. Hence, the majority of the recorded steering angles are zeros. Therefore, preprocessing images and respective steering angles are necessary in order to generalize the training model for unseen tracks such as our validation track.
 [//]: # (Image References)
 
 [image1]: ./examples/placeholder.png "Model Visualization"
@@ -24,7 +40,48 @@ The goals / steps of this project are the following:
 [image4]: ./examples/placeholder_small.png "Recovery Image"
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image7]: ./examples/placeholder_small.png "Flipped Image
+
+
+**Build, a convolution neural network in Keras that predicts steering angles from images**
+**Neural Network Archectiture**
+
+| Layer(type)       | Output Shape        |# Of Parameters
+| ------------------| --------------------|----------
+| Lambda            | (160, 320, 3)       | 0
+| Cropping2D        | (65, 320, 3)        | 0
+| Convolution2D     | (33, 160, 24)       | 1824
+| Activation        | (33, 160, 24)       | 0
+| Max Pooling2D     | (32, 159, 24)       | 0
+| Convolution2D     | (16, 80, 36)        | 21636
+| Activation        | (16, 80, 36)        | 0
+| Max Pooling2D     | (15, 79, 36)        | 0
+| Convolution2D     | (8, 40, 48)         | 43248
+| Activation        | (8, 40, 48)         | 0
+| Max Pooling2D     | (7, 39, 48)         | 0
+| Convolution2D     | (7, 39, 64)         | 27712
+| Activation        | (7, 39, 64)         | 0
+| Max Pooling2D     | (6, 38, 64)         | 0
+| Convolution2D     | (6, 38, 64)         | 36928
+| Activation        | (6, 38, 64)         | 0
+| Max Pooling2D     | (5, 37, 64)         | 0
+| Flatten           | (11840)             | 0
+| Dense             | (1164)              | 13782924
+| Activation        | (1164)              | 0
+| Dense             | (100)               | 116500
+| Activation        | (100)               | 0
+| Dense             | (50)                | 5050
+| Activation        | (50)                | 0  
+| Dense             | (10)                | 510
+| Activation        | (10)                | 0 
+| Dense             | (1)                 | 11
+| ------------------| --------------------|----------
+|Total params: 14,036,343
+|Trainable params: 14,036,343
+|Non-trainable params: 0
+| ---------------------------------------------------
+|Train on 19286 samples, validate on 4822 samples
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
