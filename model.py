@@ -13,6 +13,7 @@ from scipy import ndimage
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+from pathlib import PurePosixPath
 
 
 def process_image(image):
@@ -25,11 +26,34 @@ def process_image(image):
     return final_image
 
 
+def generator(samples, batch_size=32):
+    num_samples = len(samples)
+    while 1: # Loop forever so the generator never terminates
+        shuffle(samples)
+        for offset in range(0, num_samples, batch_size):
+            batch_samples = samples[offset:offset+batch_size]
+
+            images = []
+            angles = []
+            for batch_sample in batch_samples:
+                name = './IMG/'+batch_sample[0].split('/')[-1]
+                center_image = cv2.imread(name)
+                center_angle = float(batch_sample[3])
+                images.append(center_image)
+                angles.append(center_angle)
+
+            # trim image to only see section with road
+            X_train = np.array(images)
+            y_train = np.array(angles)
+            yield sklearn.utils.shuffle(X_train, y_train)
+
 lines = []
 images = []
 measurements = []  
-number_of_epochs = 3
+number_of_epochs = 5
 csv_file ='../data/driving_log.csv'
+car_images = ['new_1', 'new_2', 'new_3']
+steering_angles = []
 
 with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
@@ -57,7 +81,6 @@ for image, measurement in zip(images, measurements):
     augmented_images.append(cv2.flip(image,1))
     augmented_measurements.append(measurement*-1.0)
 
-    
 with open(csv_file, 'r') as f:
         reader = csv.reader(f)
         next(reader)
@@ -78,55 +101,62 @@ with open(csv_file, 'r') as f:
 
             # add images and angles to data set
             car_images.extend(img_center, img_left, img_right)
-            steering_angles.extend(steering_center, steering_left, steering_right)
+            steering_angles.extend(steering_center, steering_left, steering_right)   
+    
 
 X_train = np.array(images)
 y_train = np.array(measurements)
-  
 
 
-# Neural Network Starts here
-# The model I used is based on Nvidia's End to End Learning for Self-Driving Cars (https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf)
-# The Test Neural Network in Keras can be found below.
-
+# My Neural Network that using transfer learning from Nvidia's "End to End Learning for Self-Driving Cars" (https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf) 
+# can be found below
 model = Sequential()
 
-# set up lambda layer
+# set up lambda layer and normalize images
 model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
 
-# crop out parts of the image where trees are(top) and hood of car(bottom) with cropping2D layer
 model.add(Cropping2D(cropping=((70,25), (0,0))))
 
-# starts with a convolutional and maxpooling layers
-model.add(Convolution2D(24,5,5,subsample=(2, 2),activation="relu"))
-#model.add(MaxPooling2D(pool_size=(2, 2), strides=(1, 1)))
+model.add(Convolution2D(24, 5, 5, border_mode='same', subsample=(2, 2)))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(1, 1)))
 
-# then a convolutional and maxpooling layer
-model.add(Convolution2D(36,5,5,subsample=(2, 2),activation="relu"))
+model.add(Convolution2D(36, 5, 5, border_mode='same', subsample=(2, 2)))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(1, 1)))
 
+model.add(Convolution2D(48, 5, 5, border_mode='same', subsample=(2, 2)))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(1, 1)))
 
-# then a convolutional
-model.add(Convolution2D(48,5,5,subsample=(2, 2),activation="relu"))
+model.add(Convolution2D(64, 3, 3, border_mode='same', subsample=(1, 1)))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(1, 1)))
 
-# then another convolutional 
-model.add(Convolution2D(64,3,3,activation="relu"))
-                        
-model.add(Convolution2D(64,3,3,activation="relu"))
+model.add(Convolution2D(64, 3, 3, border_mode='same', subsample=(1, 1)))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(1, 1)))
 
 model.add(Flatten())
 
-# Next, four fully connected layers
+# Next, five fully connected layers
+model.add(Dense(1164))
+model.add(Activation('relu'))
+
 model.add(Dense(100))
-#model.add(Activation(relu))
+model.add(Activation('relu'))
+
 model.add(Dense(50))
-#model.add(Activation(relu))
+model.add(Activation('relu'))
+
 model.add(Dense(10))
-#model.add(Activation(relu))
+model.add(Activation('relu'))
+
 model.add(Dense(1))
-#model.add(Activation(relu))
 
 model.summary()
 
 model.compile(loss='mse', optimizer='adam')
 model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=number_of_epochs)
 model.save('model.h5')
+
