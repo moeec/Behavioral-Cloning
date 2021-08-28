@@ -16,13 +16,21 @@ import matplotlib.pyplot as plt
 from pathlib import PurePosixPath
 
 
+
+lines = []
+images = []
+measurements = []  
+number_of_epochs = 8
+csv_file ='../data/driving_log.csv'
+steering_angles = []
+
 def process_image(image):
     # do some pre processing on the image
     #Contrast limited adaptive histogram equalization (CLAHE) is used for improve the visibility level of foggy image or video
     # TODO: 
-    image_bw = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    bw_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     clahe = cv2.createCLAHE(clipLimit = 5)
-    final_image = clahe.apply(image_bw) + 30
+    final_image = clahe.apply(bw_image) + 30
     return final_image
 
 
@@ -47,13 +55,6 @@ def generator(samples, batch_size=32):
             y_train = np.array(angles)
             yield sklearn.utils.shuffle(X_train, y_train)
 
-lines = []
-images = []
-measurements = []  
-number_of_epochs = 5
-csv_file ='../data/driving_log.csv'
-car_images = ['new_1', 'new_2', 'new_3']
-steering_angles = []
 
 with open('../data/driving_log.csv') as csvfile:
     reader = csv.reader(csvfile)
@@ -92,16 +93,18 @@ with open(csv_file, 'r') as f:
             correction = 0.2 # this is a parameter to tune
             steering_left = steering_center + correction
             steering_right = steering_center - correction
-            print(steering_center)
             # read in images from center, left and right cameras      
             path = "../data/" # fill in the path to your training IMG directory
-            img_center = process_image(np.asarray(Image.open(path+row[0])))
-            img_left = process_image(np.asarray(Image.open(path+row[1])))
-            img_right = process_image(np.asarray(Image.open(path+row[2])))
+            img_center = process_image(np.asarray(Image.open(path+row[0].strip())))
+            img_left = process_image(np.asarray(Image.open(path+row[1].strip())))
+            img_right = process_image(np.asarray(Image.open(path+row[2].strip())))
 
             # add images and angles to data set
-            car_images.extend(img_center, img_left, img_right)
-            steering_angles.extend(steering_center, steering_left, steering_right)   
+            array_images = (img_center, img_left, img_right)
+            car_images = np. vstack(array_images)
+            array_angles = (steering_center, steering_left, steering_right)
+            steering_angles = np. vstack(array_angles)
+          
     
 
 X_train = np.array(images)
