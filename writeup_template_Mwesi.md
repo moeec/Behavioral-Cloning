@@ -24,7 +24,6 @@ When driving I first went around the track 5 times in one recording then 4 times
 Out of these 9 times I made sure I was staying within the road and in some instances I moved to the left and right side of the road then recentered to the center to demonstrate recovery to the neural network.
 This process was then repeated for the left camera then the right camera teaching the neural network different viewpoints and how to recovery.
 
-
 The dataset consists of 22134 images:
 - 7377 Center Camera Image, 
 - 7370 left Camera Image 
@@ -33,8 +32,8 @@ The dataset consists of 22134 images:
 The training track contains a lot of shallow turns and straight road segments. Hence, the majority of the recorded steering angles are zeros. Therefore, preprocessing images and respective steering angles are necessary in order to generalize the training model for unseen tracks such as our validation track.
 [//]: # (Image References)
 
-[image1]: ./WU_images/nvidia_model.jpg 
-[image2]: ./WU_images/center_2016_12_01_13_31_14_602.jpg "Center Camera Image"
+[image1]: (./WU_images/nvidia_model.jpg) 
+[image2]: ./WU_images/center_2016_12_01_13_31_14_602.jpg "Center Camera Image"   
 [image3]: ./WU_images/center_2016_12_01_13_41_30_388.jpg  "Recovery Image"
 [image4]: ./WU_images/center_2016_12_01_13_41_30_490.jpg  "Recovery Image"
 [image5]: ./WU_images/center_2016_12_01_13_41_30_591.jpg  "Recovery Image"
@@ -74,7 +73,6 @@ The training track contains a lot of shallow turns and straight road segments. H
 | Dense             | (10)                | 510
 | Activation        | (10)                | 0 
 | Dense             | (1)                 | 11
-| ------------------| --------------------|----------
 
 
 ---
