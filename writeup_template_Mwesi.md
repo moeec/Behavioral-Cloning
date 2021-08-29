@@ -132,7 +132,7 @@ For details about how I created the training data, see the next section.
 The overall strategy for deriving a model architecture was to start with the Nvidia's "End to End Learning for Self-Driving Cars" model. 
 
 **Nvidia's Neural Network**
-![alt text][image1]
+![left](./WU_images/nvidia_model.jpg)
 
 
 I thought this model might be appropriate because this model is used to map raw pixels from a single front-facing camera directly to steering commands, this is similar to what I hoped to achieve.
