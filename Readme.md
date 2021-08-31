@@ -2,8 +2,11 @@
 
 Introduction:
 
-In this project, I will use what I've learned about deep neural networks and convolutional neural networks to clone driving behavior. I will train, validate and test a model using Keras. The model will output a steering angle to an autonomous vehicle.
-I used a simulator where you can steer a car around a track for data collection. I will collect both image data and steering angles to train a neural network and then use this model to drive the car autonomously around the track.
+In this project, I used what I've learned about deep neural networks and convolutional neural networks to clone driving behavior. 
+I trained, validated and tested a model using Keras. The model outputs a steering angle to an autonomous vehicle.
+I used a simulator where you can steer a car around a track for data collection. 
+
+I collected both image data and steering angles to train a neural network and then use this model to drive the car autonomously around the track.
 
 ---
 
