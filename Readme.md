@@ -33,7 +33,7 @@ The training track contains a lot of shallow turns and straight road segments. H
 [//]: # (Image References)
 
 [image1]: (./WU_images/nvidia_model.jpg) 
-[image2]: ./WU_images/center_2016_12_01_13_31_14_602.png "Center Camera Image"   
+[image2]:   Wu_images/center_2016_12_01_13_31_14_602.jpg "Center Camera Image"   
 [image3]: ./WU_images/center_2016_12_01_13_41_30_388.png  "Recovery Image"
 [image4]: ./WU_images/center_2016_12_01_13_41_30_490.png  "Recovery Image"
 [image5]: ./WU_images/center_2016_12_01_13_41_30_591.png  "Recovery Image"
