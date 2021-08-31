@@ -32,17 +32,17 @@ The dataset consists of 22134 images:
 The training track contains a lot of shallow turns and straight road segments. Hence, the majority of the recorded steering angles are zeros. Therefore, preprocessing images and respective steering angles are necessary in order to generalize the training model for unseen tracks such as our validation track.
 [//]: # (Image References)
 
-[image1]: (./WU_images/nvidia_model.jpg) 
-[image2]:   Wu_images/center_2016_12_01_13_31_14_602.jpg "Center Camera Image"   
-[image3]: ./WU_images/center_2016_12_01_13_41_30_388.png  "Recovery Image"
-[image4]: ./WU_images/center_2016_12_01_13_41_30_490.png  "Recovery Image"
-[image5]: ./WU_images/center_2016_12_01_13_41_30_591.png  "Recovery Image"
-[image6]: ./WU_images/center_2016_12_01_13_41_30_591.png  "Recovery Image"
-[image7]: ./WU_images/center_2016_12_01_13_41_30_794.png  "Recovery Image"
-[image8]: ./WU_images/center_2016_12_01_13_41_30_894.png  "Recovery Image"
-[image9]: ./WU_images/center_2016_12_01_13_41_30_966.png  "Recovery Image"
-[image10]: ./WU_images/center_2016_12_01_13_31_14_602.png "Normal Image Before being flipped"
-[image11]: ./examples/flipped_image.png "Normal Image" "Flipped Image"
+[image1]:  WU_images/nvidia_model.jpg 
+[image2]:  Wu_images/center_2016_12_01_13_31_14_602.jpg "Center Camera Image"   
+[image3]:  WU_images/center_2016_12_01_13_41_30_388.png  "Recovery Image"
+[image4]:  WU_images/center_2016_12_01_13_41_30_490.png  "Recovery Image"
+[image5]:  WU_images/center_2016_12_01_13_41_30_591.png  "Recovery Image"
+[image6]:  WU_images/center_2016_12_01_13_41_30_591.png  "Recovery Image"
+[image7]:  WU_images/center_2016_12_01_13_41_30_794.png  "Recovery Image"
+[image8]:  WU_images/center_2016_12_01_13_41_30_894.png  "Recovery Image"
+[image9]:  WU_images/center_2016_12_01_13_41_30_966.png  "Recovery Image"
+[image10]: WU_images/center_2016_12_01_13_31_14_602.png "Normal Image Before being flipped"
+[image11]: /examples/flipped_image.png "Normal Image" "Flipped Image"
 
 
 **Build, a convolution neural network in Keras that predicts steering angles from images**
