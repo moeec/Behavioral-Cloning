@@ -43,7 +43,7 @@ The training track contains a lot of shallow turns and straight road segments. H
 [image8]:  Wu_images/center_2016_12_01_13_41_30_894.png  "Recovery Image"
 [image9]:  Wu_images/center_2016_12_01_13_41_30_966.png  "Recovery Image"
 [image10]: Wu_images/center_2016_12_01_13_31_14_602.png "Normal Image Before being flipped"
-[image11]: /examples/flipped_image.png "Normal Image" "Flipped Image"
+[image11]: examples/flipped_image.png "Normal Image" "Flipped Image"
 
 
 **Build, a convolution neural network in Keras that predicts steering angles from images**
