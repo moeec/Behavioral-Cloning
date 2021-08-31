@@ -24,6 +24,7 @@ When driving I first went around the track 5 times in one recording then 4 times
 Out of these 9 times I made sure I was staying within the road and in some instances I moved to the left and right side of the road then recentered to the center to demonstrate recovery to the neural network.
 This process was then repeated for the left camera then the right camera teaching the neural network different viewpoints and how to recovery.
 
+
 The dataset consists of 22134 images:
 - 7377 Center Camera Image, 
 - 7370 left Camera Image 
@@ -48,6 +49,7 @@ The training track contains a lot of shallow turns and straight road segments. H
 **Build, a convolution neural network in Keras that predicts steering angles from images**
 **Neural Network Archectiture**
 
+
 | Layer(type)       | Output Shape        |# Of Parameters
 | ------------------| --------------------|----------
 | Lambda            | (160, 320, 3)       | 0
@@ -64,15 +66,11 @@ The training track contains a lot of shallow turns and straight road segments. H
 | Convolution2D     | (6, 38, 64)         | 36928
 | Activation        | (6, 38, 64)         | 0
 | Flatten           | (11840)             | 0
-| Dense             | (1164)              | 13782924
-| Activation        | (1164)              | 0
 | Dense             | (100)               | 116500
-| Activation        | (100)               | 0
 | Dense             | (50)                | 5050
-| Activation        | (50)                | 0  
 | Dense             | (10)                | 510
-| Activation        | (10)                | 0 
 | Dense             | (1)                 | 11
+| ------------------| --------------------|----------
 
 
 ---
@@ -132,7 +130,15 @@ For details about how I created the training data, see the next section.
 The overall strategy for deriving a model architecture was to start with the Nvidia's "End to End Learning for Self-Driving Cars" model. 
 
 **Nvidia's Neural Network**
-![left](./WU_images/nvidia_model.jpg)
+
+### Model Architecture and Training Strategy
+
+#### 1. Solution Design Approach
+
+The overall strategy for deriving a model architecture was to start with the Nvidia's "End to End Learning for Self-Driving Cars" model. 
+
+**Nvidia's Neural Network**
+![Nvidia Model](./Wu_images/nvidia_model.jpg)
 
 
 I thought this model might be appropriate because this model is used to map raw pixels from a single front-facing camera directly to steering commands, this is similar to what I hoped to achieve.
@@ -200,6 +206,30 @@ Trainable params: 348,219
 Non-trainable params: 0
 
 
+| Layer(type)       | Output Shape        |# Of Parameters
+| ------------------| --------------------|----------
+| Lambda            | (160, 320, 3)       | 0
+| Cropping2D        | (65, 320, 3)        | 0
+| Convolution2D     | (33, 160, 24)       | 1824
+| Activation        | (33, 160, 24)       | 0
+| Max Pooling2D     | (32, 159, 24)       | 0
+| Convolution2D     | (16, 80, 36)        | 21636
+| Activation        | (16, 80, 36)        | 0
+| Convolution2D     | (8, 40, 48)         | 43248
+| Activation        | (8, 40, 48)         | 0
+| Convolution2D     | (7, 39, 64)         | 27712
+| Activation        | (7, 39, 64)         | 0
+| Convolution2D     | (6, 38, 64)         | 36928
+| Activation        | (6, 38, 64)         | 0
+| Flatten           | (11840)             | 0
+| Dense             | (100)               | 116500
+| Dense             | (50)                | 5050
+| Dense             | (10)                | 510
+| Dense             | (1)                 | 11
+| ------------------| --------------------|----------
+
+
+
 
 After the collection process, I had 38572 samples and validate on 9644. I end up having 348,219 parameters to wortk with. number of data points. 
 I then preprocessed this data by adding a lambda layer and cropping parts of the image that do not include the road.
@@ -207,6 +237,7 @@ I finally randomly shuffled the data set and put Y% of the data into a validatio
 I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5 as evidenced by  validation loss not improving after 5 epoch.
 I used an adam optimizer so that manually training the learning rate wasn't necessary.
 
-The video of my run in can be found at [Video of Autonomous Drive](run1.mp4)
+
+The video of my run in can be found at [Video of Autonomous Drive](run1.mp4) 
 
 
