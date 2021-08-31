@@ -56,22 +56,15 @@ The training track contains a lot of shallow turns and straight road segments. H
 | Activation        | (33, 160, 24)       | 0
 | Max Pooling2D     | (32, 159, 24)       | 0
 | Convolution2D     | (16, 80, 36)        | 21636
-| Activation        | (16, 80, 36)        | 0
 | Convolution2D     | (8, 40, 48)         | 43248
-| Activation        | (8, 40, 48)         | 0
 | Convolution2D     | (7, 39, 64)         | 27712
-| Activation        | (7, 39, 64)         | 0
 | Convolution2D     | (6, 38, 64)         | 36928
-| Activation        | (6, 38, 64)         | 0
 | Flatten           | (11840)             | 0
 | Dense             | (100)               | 116500
 | Dense             | (50)                | 5050
 | Dense             | (10)                | 510
 | Dense             | (1)                 | 11
-| ------------------| --------------------|----------
 
-
----
 ### Files Submitted & Code Quality
 
 #### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
@@ -170,40 +163,6 @@ To augment the data sat, I also flipped images and angles thinking that this wou
 
 The Above archectiture turns into:
 
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #   
-=================================================================
-lambda_1 (Lambda)            (None, 160, 320, 3)       0         
-_________________________________________________________________
-cropping2d_1 (Cropping2D)    (None, 65, 320, 3)        0         
-_________________________________________________________________
-conv2d_1 (Conv2D)            (None, 31, 158, 24)       1824      
-_________________________________________________________________
-max_pooling2d_1 (MaxPooling2 (None, 30, 157, 24)       0         
-_________________________________________________________________
-conv2d_2 (Conv2D)            (None, 13, 77, 36)        21636     
-_________________________________________________________________
-conv2d_3 (Conv2D)            (None, 5, 37, 48)         43248     
-_________________________________________________________________
-conv2d_4 (Conv2D)            (None, 3, 35, 64)         27712     
-_________________________________________________________________
-conv2d_5 (Conv2D)            (None, 1, 33, 64)         36928     
-_________________________________________________________________
-flatten_1 (Flatten)          (None, 2112)              0         
-_________________________________________________________________
-dense_1 (Dense)              (None, 100)               211300    
-_________________________________________________________________
-dense_2 (Dense)              (None, 50)                5050      
-_________________________________________________________________
-dense_3 (Dense)              (None, 10)                510       
-_________________________________________________________________
-dense_4 (Dense)              (None, 1)                 11        
-=================================================================
-Total params: 348,219
-Trainable params: 348,219
-Non-trainable params: 0
-
-
 | Layer(type)       | Output Shape        |# Of Parameters
 | ------------------| --------------------|----------
 | Lambda            | (160, 320, 3)       | 0
@@ -212,13 +171,9 @@ Non-trainable params: 0
 | Activation        | (33, 160, 24)       | 0
 | Max Pooling2D     | (32, 159, 24)       | 0
 | Convolution2D     | (16, 80, 36)        | 21636
-| Activation        | (16, 80, 36)        | 0
 | Convolution2D     | (8, 40, 48)         | 43248
-| Activation        | (8, 40, 48)         | 0
 | Convolution2D     | (7, 39, 64)         | 27712
-| Activation        | (7, 39, 64)         | 0
 | Convolution2D     | (6, 38, 64)         | 36928
-| Activation        | (6, 38, 64)         | 0
 | Flatten           | (11840)             | 0
 | Dense             | (100)               | 116500
 | Dense             | (50)                | 5050
@@ -226,8 +181,9 @@ Non-trainable params: 0
 | Dense             | (1)                 | 11
 | ------------------| --------------------|----------
 
-
-
+Total params: 348,219
+Trainable params: 348,219
+Non-trainable params: 0
 
 After the collection process, I had 38572 samples and validate on 9644. I end up having 348,219 parameters to wortk with. number of data points. 
 I then preprocessed this data by adding a lambda layer and cropping parts of the image that do not include the road.
